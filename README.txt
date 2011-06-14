@@ -1,8 +1,8 @@
-Instrukcja uruchomienia
-1. Uruchomić Blendera 2.49
-2. Ustawieć Script file path (na górze wysuwany panel)
-3. Uruchomić skrypt główny (Alt+P)
+Run instructions:
+1. Run Blender 2.49 (it's based on 2.4x version)
+2. Setup "Script file path" (top panel)
+3. Run main script (Alt+P)
 
 
-Inspiracja:
+Inspiration:
 http://sourceforge.net/projects/fanucrobotlrmat/files/
