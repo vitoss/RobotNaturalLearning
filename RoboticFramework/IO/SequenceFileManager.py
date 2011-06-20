@@ -22,4 +22,8 @@ class SequenceFileManager:
 		
 		
 	def save( self, sequence, filename ):
-		k = 1
+		file = open(filename, "w")
+		#
+		
+		#
+		file.close()

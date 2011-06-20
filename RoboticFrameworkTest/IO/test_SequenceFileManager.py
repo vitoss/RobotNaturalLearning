@@ -20,9 +20,11 @@ class TestSequenceFileManager:
 	
 	def test_save_simpleJointFile(self):
 		preparedSequence = self.preparePositionSequence()
-		self.manager.save(preparedSequence, "data/temp.txt")
+		targetFilepath = "RoboticFrameworkTest/data/temp.txt"
+		self.manager.save(preparedSequence, targetFilepath)
 		
-		assert os.path.exists("data/temp.txt") 
+		assert os.path.exists(targetFilepath) 
+		os.remove(targetFilepath)
 	
 	def test_load_fileNotFound(self):
 		try:

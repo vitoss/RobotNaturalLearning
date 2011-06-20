@@ -11,7 +11,6 @@ class TestSequenceExecutor:
 	positions = []
 	
 	def setup_method(self, method):
-		print "setup"
 		
 		#building sequence
 		for i in range(1,7):
@@ -34,7 +33,6 @@ class TestSequenceExecutor:
 		assert self.robotController.getStepCount() == len(self.positions)
 		
 	def teardown_method(self, method):
-		print "teardown"
 		self.positions = []
 		self.sequenceExecutor = 0
 		self.robotController = 0

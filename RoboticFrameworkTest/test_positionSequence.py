@@ -9,8 +9,6 @@ class TestPositionSequence:
 	positions = []
 	
 	def setup_method(self, method):
-		print "setup"
-		
 		self.positions = []
 		for i in range(1,7):
 			self.positions.append(Position(i))
@@ -46,7 +44,6 @@ class TestPositionSequence:
 		assert self.positionSequence.isOver() == True
 		
 	def teardown_method(self, method):
-		print "teardown"
 		del self.positions
 		del self.positionSequence
 		self.positions = []

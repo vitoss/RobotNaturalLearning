@@ -18,13 +18,25 @@ class RobotController:
 			for i in range(0, self._robotArm.getJointAmount()):
 				self._robotArm.rotateTo(i, positionValue[i])
 			
-			#moving arm to set position
-			while self._robotArm.isMovementDone() == False:
-				self._robotArm.makeMove()
-				self._robotModelBounder.bound()
-				self._Redraw() #TODO think about Visualizer???
+			self.executeMove()
+		elif position.type == "DeltaJoint":
+			positionValue = position.getValue()
+			
+			#setting position
+			for i in range(0, self._robotArm.getJointAmount()):
+				self._robotArm.rotateBy(i, positionValue[i])
+			
+			self.executeMove()
+			
 		else:
-			raise Exception( "Not implemeneted type of position" )
+			raise Exception( "Not implemented type of position: ", position.type )
 		
 		#saving position when exception not thrown
 		self.currentPosition = position
+	
+	def executeMove(self):
+		#moving arm to set position
+		while self._robotArm.isMovementDone() == False:
+			self._robotArm.makeMove()
+			self._robotModelBounder.bound()
+			self._Redraw() 
