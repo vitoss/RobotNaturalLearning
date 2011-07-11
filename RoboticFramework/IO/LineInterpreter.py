@@ -7,35 +7,37 @@ from RoboticFramework.Position.CartesianPosition import CartesianPosition
 from RoboticFramework.Position.DeltaCartesianPosition import DeltaCartesianPosition
 
 class LineInterpreter:
-	
-	def interpret( self, sequence, line ):
-		#all the magic here
-		
-		#if comments -> continue
-		if line[0] == '#':
-			return
-			
-		splitedLine = line.split('(')
-		functionName = splitedLine[0]
-		
-		#checking if we've got input arguments at all
-		if len(splitedLine) > 1:
-			inputsString = splitedLine[1].replace(")","")
-		
-		if functionName == "move":
-			#simple for now, list of joints
-			joints = map(float,inputsString.replace(" ","").split(","))
-			newPosition = JointPosition(joints)
-			sequence.appendPosition(newPosition)
-		elif functionName == "moveCartesian":
-			joints = map(float,inputsString.replace(" ","").split(","))
-			newPosition = CartesianPosition(joints)
-			sequence.appendPosition(newPosition)
-		elif functionName == "moveBy":
-			joints = map(float,inputsString.replace(" ","").split(","))
-			newPosition = DeltaJointPosition(joints)
-			sequence.appendPosition(newPosition)
-		elif functionName == "moveCartesianBy":
-			joints = map(float,inputsString.replace(" ","").split(","))
-			newPosition = DeltaCartesianPosition(joints)
-			sequence.appendPosition(newPosition)
+    
+    def interpret( self, sequence, line ):
+        #all the magic here
+        sequence.appendPosition(self.interpretLine(line))
+        
+    
+    def interpretLine( self, line ):
+        #if comments -> continue
+        if line[0] == '#':
+            return -1
+            
+        newPosition = -1
+        splitedLine = line.split('(')
+        functionName = splitedLine[0]
+        
+        #checking if we've got input arguments at all
+        if len(splitedLine) > 1:
+            inputsString = splitedLine[1].replace(")","")
+        
+        if functionName == "move":
+            #simple for now, list of joints
+            joints = map(float,inputsString.replace(" ","").split(","))
+            newPosition = JointPosition(joints)
+        elif functionName == "moveCartesian":
+            joints = map(float,inputsString.replace(" ","").split(","))
+            newPosition = CartesianPosition(joints)
+        elif functionName == "moveBy":
+            joints = map(float,inputsString.replace(" ","").split(","))
+            newPosition = DeltaJointPosition(joints)
+        elif functionName == "moveCartesianBy":
+            joints = map(float,inputsString.replace(" ","").split(","))
+            newPosition = DeltaCartesianPosition(joints)
+            
+        return newPosition
