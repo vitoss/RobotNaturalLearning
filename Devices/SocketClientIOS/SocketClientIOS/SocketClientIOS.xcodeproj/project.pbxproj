@@ -1,0 +1,313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5FAB069713CCACE0000879C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FAB069613CCACE0000879C1 /* UIKit.framework */; };
+		5FAB069913CCACE0000879C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FAB069813CCACE0000879C1 /* Foundation.framework */; };
+		5FAB069B13CCACE0000879C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FAB069A13CCACE0000879C1 /* CoreGraphics.framework */; };
+		5FAB06A113CCACE1000879C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5FAB069F13CCACE1000879C1 /* InfoPlist.strings */; };
+		5FAB06A413CCACE1000879C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB06A313CCACE1000879C1 /* main.m */; };
+		5FAB06A713CCACE1000879C1 /* SocketClientIOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB06A613CCACE1000879C1 /* SocketClientIOSAppDelegate.m */; };
+		5FAB06AA13CCACE1000879C1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FAB06A813CCACE1000879C1 /* MainWindow.xib */; };
+		5FAB06AD13CCACE1000879C1 /* SocketClientIOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB06AC13CCACE1000879C1 /* SocketClientIOSViewController.m */; };
+		5FAB06B013CCACE1000879C1 /* SocketClientIOSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FAB06AE13CCACE1000879C1 /* SocketClientIOSViewController.xib */; };
+		5FAB06BA13CCAD33000879C1 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB06B713CCAD33000879C1 /* AsyncSocket.m */; };
+		5FAB06BB13CCAD33000879C1 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB06B913CCAD33000879C1 /* AsyncUdpSocket.m */; };
+		5FAB06D513CCB540000879C1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FAB06D413CCB540000879C1 /* CFNetwork.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5FAB069213CCACE0000879C1 /* SocketClientIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocketClientIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FAB069613CCACE0000879C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5FAB069813CCACE0000879C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5FAB069A13CCACE0000879C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5FAB069E13CCACE1000879C1 /* SocketClientIOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SocketClientIOS-Info.plist"; sourceTree = "<group>"; };
+		5FAB06A013CCACE1000879C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5FAB06A213CCACE1000879C1 /* SocketClientIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SocketClientIOS-Prefix.pch"; sourceTree = "<group>"; };
+		5FAB06A313CCACE1000879C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5FAB06A513CCACE1000879C1 /* SocketClientIOSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SocketClientIOSAppDelegate.h; sourceTree = "<group>"; };
+		5FAB06A613CCACE1000879C1 /* SocketClientIOSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SocketClientIOSAppDelegate.m; sourceTree = "<group>"; };
+		5FAB06A913CCACE1000879C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		5FAB06AB13CCACE1000879C1 /* SocketClientIOSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SocketClientIOSViewController.h; sourceTree = "<group>"; };
+		5FAB06AC13CCACE1000879C1 /* SocketClientIOSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SocketClientIOSViewController.m; sourceTree = "<group>"; };
+		5FAB06AF13CCACE1000879C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SocketClientIOSViewController.xib; sourceTree = "<group>"; };
+		5FAB06B613CCAD33000879C1 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		5FAB06B713CCAD33000879C1 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		5FAB06B813CCAD33000879C1 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
+		5FAB06B913CCAD33000879C1 /* AsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncUdpSocket.m; sourceTree = "<group>"; };
+		5FAB06D413CCB540000879C1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5FAB068F13CCACE0000879C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FAB06D513CCB540000879C1 /* CFNetwork.framework in Frameworks */,
+				5FAB069713CCACE0000879C1 /* UIKit.framework in Frameworks */,
+				5FAB069913CCACE0000879C1 /* Foundation.framework in Frameworks */,
+				5FAB069B13CCACE0000879C1 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5FAB068713CCACE0000879C1 = {
+			isa = PBXGroup;
+			children = (
+				5FAB06D413CCB540000879C1 /* CFNetwork.framework */,
+				5FAB069C13CCACE0000879C1 /* SocketClientIOS */,
+				5FAB069513CCACE0000879C1 /* Frameworks */,
+				5FAB069313CCACE0000879C1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5FAB069313CCACE0000879C1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5FAB069213CCACE0000879C1 /* SocketClientIOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5FAB069513CCACE0000879C1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5FAB069613CCACE0000879C1 /* UIKit.framework */,
+				5FAB069813CCACE0000879C1 /* Foundation.framework */,
+				5FAB069A13CCACE0000879C1 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5FAB069C13CCACE0000879C1 /* SocketClientIOS */ = {
+			isa = PBXGroup;
+			children = (
+				5FAB06B613CCAD33000879C1 /* AsyncSocket.h */,
+				5FAB06B713CCAD33000879C1 /* AsyncSocket.m */,
+				5FAB06B813CCAD33000879C1 /* AsyncUdpSocket.h */,
+				5FAB06B913CCAD33000879C1 /* AsyncUdpSocket.m */,
+				5FAB06A513CCACE1000879C1 /* SocketClientIOSAppDelegate.h */,
+				5FAB06A613CCACE1000879C1 /* SocketClientIOSAppDelegate.m */,
+				5FAB06A813CCACE1000879C1 /* MainWindow.xib */,
+				5FAB06AB13CCACE1000879C1 /* SocketClientIOSViewController.h */,
+				5FAB06AC13CCACE1000879C1 /* SocketClientIOSViewController.m */,
+				5FAB06AE13CCACE1000879C1 /* SocketClientIOSViewController.xib */,
+				5FAB069D13CCACE1000879C1 /* Supporting Files */,
+			);
+			path = SocketClientIOS;
+			sourceTree = "<group>";
+		};
+		5FAB069D13CCACE1000879C1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5FAB069E13CCACE1000879C1 /* SocketClientIOS-Info.plist */,
+				5FAB069F13CCACE1000879C1 /* InfoPlist.strings */,
+				5FAB06A213CCACE1000879C1 /* SocketClientIOS-Prefix.pch */,
+				5FAB06A313CCACE1000879C1 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5FAB069113CCACE0000879C1 /* SocketClientIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FAB06B313CCACE1000879C1 /* Build configuration list for PBXNativeTarget "SocketClientIOS" */;
+			buildPhases = (
+				5FAB068E13CCACE0000879C1 /* Sources */,
+				5FAB068F13CCACE0000879C1 /* Frameworks */,
+				5FAB069013CCACE0000879C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SocketClientIOS;
+			productName = SocketClientIOS;
+			productReference = 5FAB069213CCACE0000879C1 /* SocketClientIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5FAB068913CCACE0000879C1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = AGH;
+			};
+			buildConfigurationList = 5FAB068C13CCACE0000879C1 /* Build configuration list for PBXProject "SocketClientIOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5FAB068713CCACE0000879C1;
+			productRefGroup = 5FAB069313CCACE0000879C1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5FAB069113CCACE0000879C1 /* SocketClientIOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5FAB069013CCACE0000879C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FAB06A113CCACE1000879C1 /* InfoPlist.strings in Resources */,
+				5FAB06AA13CCACE1000879C1 /* MainWindow.xib in Resources */,
+				5FAB06B013CCACE1000879C1 /* SocketClientIOSViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5FAB068E13CCACE0000879C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FAB06A413CCACE1000879C1 /* main.m in Sources */,
+				5FAB06A713CCACE1000879C1 /* SocketClientIOSAppDelegate.m in Sources */,
+				5FAB06AD13CCACE1000879C1 /* SocketClientIOSViewController.m in Sources */,
+				5FAB06BA13CCAD33000879C1 /* AsyncSocket.m in Sources */,
+				5FAB06BB13CCAD33000879C1 /* AsyncUdpSocket.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		5FAB069F13CCACE1000879C1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FAB06A013CCACE1000879C1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5FAB06A813CCACE1000879C1 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FAB06A913CCACE1000879C1 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		5FAB06AE13CCACE1000879C1 /* SocketClientIOSViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FAB06AF13CCACE1000879C1 /* en */,
+			);
+			name = SocketClientIOSViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5FAB06B113CCACE1000879C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5FAB06B213CCACE1000879C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		5FAB06B413CCACE1000879C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Witold Wasilewski (GQ76KUZV4S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Witold Wasilewski (GQ76KUZV4S)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SocketClientIOS/SocketClientIOS-Prefix.pch";
+				INFOPLIST_FILE = "SocketClientIOS/SocketClientIOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2B7023AF-A32F-4BC2-B6BF-73F6B4E808B4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2B7023AF-A32F-4BC2-B6BF-73F6B4E808B4";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5FAB06B513CCACE1000879C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Witold Wasilewski (GQ76KUZV4S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Witold Wasilewski (GQ76KUZV4S)";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SocketClientIOS/SocketClientIOS-Prefix.pch";
+				INFOPLIST_FILE = "SocketClientIOS/SocketClientIOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2B7023AF-A32F-4BC2-B6BF-73F6B4E808B4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2B7023AF-A32F-4BC2-B6BF-73F6B4E808B4";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5FAB068C13CCACE0000879C1 /* Build configuration list for PBXProject "SocketClientIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FAB06B113CCACE1000879C1 /* Debug */,
+				5FAB06B213CCACE1000879C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5FAB06B313CCACE1000879C1 /* Build configuration list for PBXNativeTarget "SocketClientIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FAB06B413CCACE1000879C1 /* Debug */,
+				5FAB06B513CCACE1000879C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5FAB068913CCACE0000879C1 /* Project object */;
+}
