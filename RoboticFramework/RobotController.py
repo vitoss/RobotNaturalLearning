@@ -1,6 +1,7 @@
 #Class for robot controller, which stands for whole integrity
 #It provides api for robot sequencer or other class which take command over robot
 #Author: Witold Wasilewski 2011
+import time
 
 class RobotController:
     
@@ -43,9 +44,10 @@ class RobotController:
             self._Redraw() 
     
     def startProcessingInputQueue(self, queue):
-        while raw_input("Kick next step!") != "q":
+        while True:
             print "Next step"
             if queue.empty() == False :
                 command = queue.get()
                 self.moveTo(command)
+            time.sleep(0.01)
                 #self.executeMove()

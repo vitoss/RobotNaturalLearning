@@ -15,7 +15,7 @@ class SocketReceiver (InputReceiver):
         
         SocketReceiverHandler.queue = self.queue
         
-        HOST, PORT = "localhost", 9998
+        HOST, PORT = "192.168.0.104", 2006
         self.server = SocketServer.UDPServer((HOST, PORT), SocketReceiverHandler)
         self.server.serve_forever()
 		
