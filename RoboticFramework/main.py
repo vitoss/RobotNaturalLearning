@@ -13,19 +13,26 @@ from RoboticFramework import RobotArm
 from RoboticFramework import RobotModelBounder
 from RoboticFramework import RobotController
 from RoboticFramework.Position import JointPosition 
-from RoboticFramework.Position.PositionSequence import PositionSequence
-from RoboticFramework.Position.JointPosition import JointPosition
-from RoboticFramework.SequenceExecutor import SequenceExecutor
-from RoboticFramework.IO.SequenceFileManager import SequenceFileManager
+import RoboticFramework.IO.CommandFileManager as CommandFileManager
 
 #Blender runs in one python instance, so we need reload this when developing
 reload(RobotArm)
 reload(RobotModelBounder)
 reload(RobotController)
-reload(JointPosition)
+reload(CommandFileManager)
+
+#Input receivers libraries
+import Queue
+import pygame
+
+from RoboticFramework.IO.InputReceiverManager import InputReceiverManager
+reload (RoboticFramework.IO.InputReceiverManager )
+from RoboticFramework.IO.InputReceiverFactory import InputReceiverFactory
+reload (RoboticFramework.IO.InputReceiverFactory )
+
+pygame.init()
 
 #
-reload(RoboticFramework.SequenceExecutor)
 
 links = []
 links.append( Object.Get('linkone') ) 
@@ -52,18 +59,21 @@ robotModelBounder = RobotModelBounder.RobotModelBounder( robotArm, links, tool, 
 robotController = RobotController.RobotController(robotArm, robotModelBounder, Redraw )
 
 
-#Building positionSequence
-#positions = []
-#positions.append(JointPosition( [60.0,-30.0,30.0,-20.0,10.0,-40.0] ))
-#positions.append(JointPosition( [-80.0,30.0,-30.0,20.0,-10.0,40.0] ))
-#positions.append(JointPosition( [0.0,-45.0,45.0,0.0,20.0,0.0] ))
-#sequence = PositionSequence(positions)
-
 #reading from file
-sequence = PositionSequence()
-manager = SequenceFileManager()
-manager.load(sequence, "angles.txt")
+manager = CommandFileManager.CommandFileManager()
+#manager.load(sequence, "/Users/vito/Dropbox/Projects/bch/fanuc-LR-Mate200i-simulation/angles.txt")
+commands = manager.load("D:/My Dropbox/Projects/bch/RobotLearning/commands.txt")
 
-#setup sequenceExecutor
-#sequenceExecutor = SequenceExecutor(robotController, sequence)
-#sequenceExecutor.execute(2)
+commands.execute(robotController)
+
+#Input Receivers
+#create queue for input events. Maxsize set to 0 means unlimited number of events
+queue = Queue.Queue(maxsize=0)
+
+inputReceiversManager = InputReceiverManager()
+inputReceiversFactory = InputReceiverFactory(queue)
+
+inputReceiversManager.add(inputReceiversFactory.createSocket())
+inputReceiversManager.start()
+
+robotController.startProcessingInputQueue(queue)

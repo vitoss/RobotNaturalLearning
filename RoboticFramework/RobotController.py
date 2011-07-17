@@ -11,7 +11,12 @@ class RobotController:
         self.currentPosition = list(robotArm.JointPositions) #we copy, because we don't want to interfere with robotArm
         self._Redraw = Redraw
         
-    def moveTo(self, position):
+    #position - target position
+    #speedFactor - float 0-1, we multiply physical robotArm speed with this factor
+    def moveTo( self, position, speedFactor):
+        #setting robot arm speed
+        self._robotArm.setSpeedFactor(speedFactor)
+        
         if position.type == "Joint" :
             positionValue = position.getValue()
             
@@ -35,6 +40,7 @@ class RobotController:
         
         #saving position when exception not thrown
         self.currentPosition = position
+        
     
     def executeMove(self):
         #moving arm to set position
@@ -48,6 +54,6 @@ class RobotController:
             print "Next step"
             if queue.empty() == False :
                 command = queue.get()
-                self.moveTo(command)
+                command.execute(self)
             time.sleep(0.01)
                 #self.executeMove()

@@ -5,7 +5,7 @@ import time
 import SocketServer
 from InputReceiver import InputReceiver 
 import RoboticFramework.Position.DeltaJointPosition as DeltaJointPosition
-import RoboticFramework.IO.LineInterpreter as LineInterpreter
+import RoboticFramework.IO.PositionLineInterpreter as PositionLineInterpreter
 
 class SocketReceiver (InputReceiver):
 
@@ -30,7 +30,7 @@ class SocketReceiver (InputReceiver):
 class SocketReceiverHandler(SocketServer.BaseRequestHandler):
     
     def setup(self):
-        self.interpreter = LineInterpreter.LineInterpreter()
+        self.interpreter = PositionLineInterpreter.PositionLineInterpreter()
         SocketServer.BaseRequestHandler.setup(self)
     
     def finish(self):
@@ -39,6 +39,9 @@ class SocketReceiverHandler(SocketServer.BaseRequestHandler):
         
     def handle(self):
         
+        if self.queue.full(): 
+            return #if queue is full quit
+        
         #self.queue.put(DeltaJointPosition.DeltaJointPosition([5,5,5,5,5,5]))
         data = self.request[0].strip()
         socket = self.request[1]
@@ -46,8 +49,8 @@ class SocketReceiverHandler(SocketServer.BaseRequestHandler):
         print data
         socket.sendto(data.upper(), self.client_address)
         
-        position = self.interpret_absolute(data)
-        self.queue.put( position )
+        command = self.interpret_absolute(data)
+        self.queue.put( command )
         
     def interpret_absolute(self, data):
         return self.interpreter.interpretLine(data)

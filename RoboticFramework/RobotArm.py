@@ -17,11 +17,15 @@ class RobotArm:
         self._JointMaxSpeed = list(maxSpeed)
         self._JointTargetPosition = list(zeroPosition) #copy array of zeros position
         self._JointIncerements = list(zeroPosition)
+        self.speedFactor = 1 #float 0-1, limiting speed
     
     def rotateTo( self, jointNumber, degree ):
         if jointNumber >= len(self.JointPositions):
             raise Exception( "There are no such Joint" )
     
+        if abs( self.JointPositions[jointNumber] - degree ) < 1 :
+            return # we are already there
+            
         #checking if we can make move
         minAxisConstr = self._Constrainments[jointNumber][0]
         maxAxisConstr = self._Constrainments[jointNumber][1];
@@ -31,7 +35,8 @@ class RobotArm:
         
         self._JointTargetPosition[jointNumber] = degree
         #we assume full speed when rotating only one joint
-        self._JointIncerements[jointNumber] = (self._JointTargetPosition[jointNumber] - self.JointPositions[jointNumber])*self._JointMaxSpeed[jointNumber]/360;
+        self._JointIncerements[jointNumber] = (self._JointTargetPosition[jointNumber] - self.JointPositions[jointNumber])*self._JointMaxSpeed[jointNumber]*self.speedFactor/360;
+        print self._JointIncerements[jointNumber]
         
     def rotateBy( self, jointNumber, byDegree ):
         if jointNumber >= len(self.JointPositions):
@@ -48,11 +53,11 @@ class RobotArm:
             
         self._JointTargetPosition[jointNumber] = degree
         #we assume full speed when rotating only one joint
-        self._JointIncerements[jointNumber] = (self._JointTargetPosition[jointNumber] - self.JointPositions[jointNumber])*self._JointMaxSpeed[jointNumber]/360.0;
+        self._JointIncerements[jointNumber] = (self._JointTargetPosition[jointNumber] - self.JointPositions[jointNumber])*self._JointMaxSpeed[jointNumber]*self.speedFactor/360.0;
         
     
     def isRotateDone( self, jointNumber ):
-        if abs(self.JointPositions[jointNumber] - self._JointTargetPosition[jointNumber]) < 0.001:
+        if abs(self.JointPositions[jointNumber] - self._JointTargetPosition[jointNumber]) < 1:
             self.JointPositions[jointNumber] = self._JointTargetPosition[jointNumber]
             return True
         else:
@@ -69,7 +74,10 @@ class RobotArm:
     def makeMove( self ):
         for i in range(0,6):
             if self._JointIncerements[i] != 0:
-                self.JointPositions[i] += self._JointIncerements[i]
+                if abs(self._JointTargetPosition[i] - self.JointPositions[i]) < self._JointIncerements[i]:
+                    self.JointPositions[i] = self._JointTargetPosition[i]
+                else:
+                    self.JointPositions[i] += self._JointIncerements[i]
                 
             #resetting incerements when achiving target position
             if self.isRotateDone( i ) == True:
@@ -77,4 +85,12 @@ class RobotArm:
 
     def getJointAmount(self):
         return len(self.JointPositions)
+    
+    def setSpeedFactor( self, _speedFactor ):
+        if _speedFactor > 1:
+            _speedFactor = 1
+        elif _speedFactor < 0:
+            _speedFactor = 0
+         
+        self.speedFactor = _speedFactor
         
