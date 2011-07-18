@@ -8,8 +8,9 @@ reload( SocketReceiver )
 
 class InputReceiverFactory:
     
-    def __init__(self, _queue):
+    def __init__(self, _queue, _config):
         self.queue = _queue
+        self.config = _config
     
     def createKeyboard(self):
         print "Creating keyboard"
@@ -20,5 +21,6 @@ class InputReceiverFactory:
     def createSocket(self):
         print "Creating socket"
         newReceiver = SocketReceiver.SocketReceiver( 2, "Socket", self.queue )
+        newReceiver.config = self.config.Sockets.iPhone
         newReceiver.start()
         return newReceiver

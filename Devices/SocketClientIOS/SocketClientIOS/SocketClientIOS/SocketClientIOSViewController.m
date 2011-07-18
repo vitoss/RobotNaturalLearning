@@ -15,6 +15,9 @@
 #define WELCOME_MSG  0
 #define ECHO_MSG     1
 
+#define MESSAGE_INTERVAL 0.5
+#define MAX_ARM_SPEED 10
+
 @implementation SocketClientIOSViewController
 @synthesize logWindow, ipField, messageField, portField, listenSocket, connectedSockets;
 @synthesize sendMsgButton, connectButton, accelerometer, acceptButton;
@@ -57,7 +60,7 @@
     
     //acelerometer
     self.accelerometer = [UIAccelerometer sharedAccelerometer];
-    self.accelerometer.updateInterval = 0.25; //0.08
+    self.accelerometer.updateInterval = MESSAGE_INTERVAL; //0.08
     self.accelerometer.delegate = self;
 }
 
@@ -227,19 +230,76 @@
 
 #pragma mark - Acelerometer
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-    /*labelX.text = [NSString stringWithFormat:@"%@%f", @"X: ", acceleration.x];
-    labelY.text = [NSString stringWithFormat:@"%@%f", @"Y: ", acceleration.y];
-    labelZ.text = [NSString stringWithFormat:@"%@%f", @"Z: ", acceleration.z];
     
-    self.progressX.progress = ABS(acceleration.x);
-    self.progressY.progress = ABS(acceleration.y);
-    self.progressZ.progress = ABS(acceleration.z);*/
     if( isRunning ) {
         //[self logMessage:@"Send acceleration data."];
-        NSMutableString *message = [NSMutableString stringWithString: [NSString stringWithFormat:@"move(%.2f,%.2f,%.2f,%.2f,%.2f,%.2f)", (acceleration.x+1)*180, (acceleration.y+1)*180, (acceleration.z+1)*180, 0, 0, 0]];
+        
+        float xSpeedFactor = acceleration.x;
+        if( xSpeedFactor < 0 )
+            xSpeedFactor = -xSpeedFactor;
+        
+        if( xSpeedFactor > 0.66 )
+            xSpeedFactor = 1;
+        else if( xSpeedFactor > 0.33 )
+            xSpeedFactor = 0.5;
+        else 
+            xSpeedFactor = 0;
+        
+        float ySpeedFactor = acceleration.y;
+        
+        if( ySpeedFactor < 0 )
+            ySpeedFactor = -ySpeedFactor;
+        
+        if( ySpeedFactor > 0.66  )
+            ySpeedFactor = 1;
+        else if( ySpeedFactor > 0.33  )
+            ySpeedFactor = 0.5;
+        else 
+            ySpeedFactor = 0;
+        
+        
+        float zSpeedFactor = acceleration.z;
+        
+        if( zSpeedFactor < 0 )
+            zSpeedFactor = -zSpeedFactor;
+        
+        if( zSpeedFactor > 0.66 )
+            zSpeedFactor = 1;
+        else if( zSpeedFactor > 0.33 )
+            zSpeedFactor = 0.5;
+        else 
+            zSpeedFactor = 0;
+        
+        //first axis
+        float xAxis = MAX_ARM_SPEED*xSpeedFactor*MESSAGE_INTERVAL;
+        float yAxis = MAX_ARM_SPEED*ySpeedFactor*MESSAGE_INTERVAL;
+        float zAxis = MAX_ARM_SPEED*zSpeedFactor*MESSAGE_INTERVAL;
+        
+        if( acceleration.x > 0.5 ) {
+            xAxis = xAxis; 
+        } else if( acceleration.x < -0.5 ) {
+            xAxis = -xAxis;
+        }
+        
+        if( acceleration.y > 0.5 ) {
+            yAxis = yAxis; 
+        } else if( acceleration.y < -0.5 ) {
+            yAxis = -yAxis;
+        }
+        
+        if( acceleration.z > 0.5 ) {
+            zAxis = zAxis; 
+        } else if( acceleration.z < -0.5 ) {
+            zAxis = -zAxis;
+        }
+        
+        float finalSpeedFactor = MAX( zSpeedFactor, MAX(xSpeedFactor, ySpeedFactor));
+        
+        NSMutableString *message = [NSMutableString stringWithString: [NSString stringWithFormat:@"moveBy(%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f)", xAxis, yAxis, zAxis, 0.0, 0.0, 0.0, finalSpeedFactor]];
         [message appendString:@"\n"];
         
-        //for test
+        //for test        
+        NSLog(@"A: %.4f, %.4f, %.4f", acceleration.x, acceleration.y, acceleration.z);
         
         NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"Sending: %@", message);

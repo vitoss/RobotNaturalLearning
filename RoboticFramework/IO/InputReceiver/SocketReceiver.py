@@ -8,14 +8,15 @@ import RoboticFramework.Position.DeltaJointPosition as DeltaJointPosition
 import RoboticFramework.IO.PositionLineInterpreter as PositionLineInterpreter
 
 class SocketReceiver (InputReceiver):
-
+    
+    
     def run(self):
         
         print "Starting " + self.customName
         
         SocketReceiverHandler.queue = self.queue
         
-        HOST, PORT = "192.168.0.104", 2006
+        HOST, PORT = self.config.ip, self.config.port
         self.server = SocketServer.UDPServer((HOST, PORT), SocketReceiverHandler)
         self.server.serve_forever()
 		

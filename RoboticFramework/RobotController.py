@@ -55,5 +55,5 @@ class RobotController:
             if queue.empty() == False :
                 command = queue.get()
                 command.execute(self)
-            time.sleep(0.01)
+            #time.sleep(0.01)
                 #self.executeMove()

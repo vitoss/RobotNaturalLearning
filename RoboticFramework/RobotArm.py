@@ -53,7 +53,7 @@ class RobotArm:
             
         self._JointTargetPosition[jointNumber] = degree
         #we assume full speed when rotating only one joint
-        self._JointIncerements[jointNumber] = (self._JointTargetPosition[jointNumber] - self.JointPositions[jointNumber])*self._JointMaxSpeed[jointNumber]*self.speedFactor/360.0;
+        self._JointIncerements[jointNumber] = (self._JointTargetPosition[jointNumber] - self.JointPositions[jointNumber])*self._JointMaxSpeed[jointNumber]*self.speedFactor/360;
         
     
     def isRotateDone( self, jointNumber ):
