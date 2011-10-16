@@ -1,0 +1,20 @@
+Console features:
+- help
+- autocompletion
+
+http://pypi.python.org/pypi/cmd2
+
+Install cmd2:
+hg clone http://hg.assembla.com/python-cmd2 cmd2
+cd cmd2
+python setup.py develop
+
+http://www.assembla.com/wiki/show/python-cmd2
+
+
+Usuage:
+- load - loading script
+- save - saving script
+- edit - edit script
+- komentarze: /* */ lub #
+- q = quit = exit

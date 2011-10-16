@@ -32,6 +32,22 @@ class RobotController:
                 self._robotArm.rotateBy(i, positionValue[i])
             
             self.executeMove()
+        
+        elif position.type == "AxisJoint":
+            positionValue = position.getValue()
+            
+            #setting position
+            self._robotArm.rotateTo(int(positionValue[0]), positionValue[1])
+            
+            self.executeMove()
+            
+        elif position.type == "AxisDeltaJoint":
+            positionValue = position.getValue()
+            
+            #setting position
+            self._robotArm.rotateBy(int(positionValue[0]), positionValue[1])
+            
+            self.executeMove()
             
         else:
             raise Exception( "Not implemented type of position: ", position.type )

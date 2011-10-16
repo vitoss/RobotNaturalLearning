@@ -5,6 +5,8 @@ from RoboticFramework.Position.JointPosition import JointPosition
 from RoboticFramework.Position.DeltaJointPosition import DeltaJointPosition
 from RoboticFramework.Position.CartesianPosition import CartesianPosition
 from RoboticFramework.Position.DeltaCartesianPosition import DeltaCartesianPosition
+from RoboticFramework.Position.AxisDeltaJointPosition import AxisDeltaJointPosition
+from RoboticFramework.Position.AxisJointPosition import AxisJointPosition
 import RoboticFramework.Command.MoveToPositionCommand as MoveToPositionCommand
 import RoboticFramework.Command.MoveToPositionConcurentCommand as MoveToPositionConcurentCommand
 import PositionLineInterpreter
@@ -44,32 +46,46 @@ class PositionCommandLineInterpreter (PositionLineInterpreter.PositionLineInterp
         
         if functionName == "move":
             #simple for now, list of joints
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = JointPosition(joints[0:self.axisAmount])
             
             if len(joints) == 7:
                 newPositionCommand.speedFactor = joints[6]
                 
         elif functionName == "moveCartesian":
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = CartesianPosition(joints[0:self.axisAmount])
             
             if len(joints) == 7:
                 newPositionCommand.speedFactor = joints[6]
             
         elif functionName == "moveBy":
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = DeltaJointPosition(joints[0:self.axisAmount])
             
             if len(joints) == 7:
                 newPositionCommand.speedFactor = joints[6]
                 
         elif functionName == "moveCartesianBy":
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = DeltaCartesianPosition(joints[0:self.axisAmount])
             
             if len(joints) == 7:
                 newPositionCommand.speedFactor = joints[6]
+                
+        elif functionName == "moveAxis":
+            joints = self.getFuctionArguments(inputsString)
+            newPosition = AxisJointPosition(joints[0:2])
+            
+            if len(joints) == 3:
+                newPositionCommand.speedFactor = joints[2]
+        
+        elif functionName == "moveAxisBy":
+            joints = self.getFuctionArguments(inputsString)
+            newPosition = AxisDeltaJointPosition(joints[0:2])
+            
+            if len(joints) == 3:
+                newPositionCommand.speedFactor = joints[2]
         
         newPositionCommand.position = newPosition
         

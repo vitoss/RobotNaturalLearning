@@ -50,7 +50,7 @@ class KeyboardReceiver  : #(InputReceiver):
                     input = sys.stdin.readline()
                     return input
             return 0
-        except Exception as ex:
+        except Exception:
             #WINDOWS implementation
             import msvcrt
             

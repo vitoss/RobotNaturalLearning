@@ -10,9 +10,8 @@ def start():
     print j.get_name()
     
     HOST, PORT = "127.0.0.1", 2007
-    data = " ".join(sys.argv[1:])
 
-    # Create a socket (SOCK_STREAM means a TCP socket)
+    # Create a socket (UDP)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     # Connect to server and send data

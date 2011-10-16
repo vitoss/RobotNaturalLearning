@@ -38,23 +38,23 @@ class PositionLineInterpreter (LineInterpreter.LineInterpreter):
         
         if functionName == "move":
             #simple for now, list of joints
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = JointPosition(joints[0:self.axisAmount])
 
         elif functionName == "moveCartesian":
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = CartesianPosition(joints[0:self.axisAmount])
 
         elif functionName == "moveBy":
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = DeltaJointPosition(joints[0:self.axisAmount])
 
         elif functionName == "moveCartesianBy":
-            joints = self.getJoints(inputsString)
+            joints = self.getFuctionArguments(inputsString)
             newPosition = DeltaCartesianPosition(joints[0:self.axisAmount])
         
         return newPosition
         
         
-    def getJoints( self, inputsString ):
+    def getFuctionArguments( self, inputsString ):
         return map(float,inputsString.replace(" ","").split(","))

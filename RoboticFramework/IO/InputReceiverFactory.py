@@ -3,10 +3,10 @@
 
 import InputReceiver.KeyboardReceiver as KeyboardReceiver
 import InputReceiver.SocketReceiver as SocketReceiver
-import InputReceiver.JoystickReceiver as JoystickReceiver
+#import InputReceiver.JoystickReceiver as JoystickReceiver
 reload( KeyboardReceiver )
 reload( SocketReceiver )
-reload( JoystickReceiver )
+#reload( JoystickReceiver )
 
 class InputReceiverFactory:
     
@@ -27,9 +27,9 @@ class InputReceiverFactory:
         newReceiver.start()
         return newReceiver
     
-    def createJoystick(self):
-        print "Creating joystick"
-        newReceiver = JoystickReceiver.JoystickReceiver( 3, "Joystick", self.queue )
-        newReceiver.config = self.config.Joystick
-        newReceiver.start()
-        return newReceiver
+#    def createJoystick(self):
+#        print "Creating joystick"
+#        newReceiver = JoystickReceiver.JoystickReceiver( 3, "Joystick", self.queue )
+#        newReceiver.config = self.config.Joystick
+#        newReceiver.start()
+#        return newReceiver
