@@ -9,6 +9,7 @@ class CommandLoop (Command.Command):
     #counter
 
     def __init__(self):
+        Command.Command.__init__(self)
         self.command = -1
         self.counter = 0
     

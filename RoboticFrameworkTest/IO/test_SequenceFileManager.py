@@ -14,13 +14,13 @@ class TestSequenceFileManager:
 		self.sequence = PositionSequence([])
 		
 	def test_load_simpleJointFile(self):
-		self.manager.load(self.sequence, "RoboticFrameworkTest/data/simple.txt")
+		self.manager.load(self.sequence, "data/simple.txt")
 		
 		assert self.sequence.amount() == 3
 	
 	def test_save_simpleJointFile(self):
 		preparedSequence = self.preparePositionSequence()
-		targetFilepath = "RoboticFrameworkTest/data/temp.txt"
+		targetFilepath = "data/temp.txt"
 		self.manager.save(preparedSequence, targetFilepath)
 		
 		assert os.path.exists(targetFilepath) 

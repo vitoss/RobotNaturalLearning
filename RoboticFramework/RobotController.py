@@ -1,7 +1,6 @@
 #Class for robot controller, which stands for whole integrity
 #It provides api for robot sequencer or other class which take command over robot
 #Author: Witold Wasilewski 2011
-import time
 
 class RobotController:
     
@@ -26,7 +25,6 @@ class RobotController:
             
             self.executeMove()
         elif position.type == "DeltaJoint":
-            print "Moving delta"
             positionValue = position.getValue()
             
             #setting position
@@ -45,15 +43,29 @@ class RobotController:
     def executeMove(self):
         #moving arm to set position
         while self._robotArm.isMovementDone() == False:
+            #print "Execute move effective"
             self._robotArm.makeMove()
             self._robotModelBounder.bound()
             self._Redraw() 
+                
+        
+    def stopMove(self):
+        self._robotArm.stopAtCurrentPosition()
     
+    def isIdle(self):
+        return self._robotArm.isMovementDone()
+        
     def startProcessingInputQueue(self, queue):
-        while True:
-            print "Next step"
-            if queue.empty() == False :
-                command = queue.get()
-                command.execute(self)
-            #time.sleep(0.01)
-                #self.executeMove()
+            command = 0
+            while True:
+                #print "Next step"
+                if queue.empty() == False :
+                    if command == 0 or command.isExecuted():
+                        print "Start command"
+                        #pop first command and go!
+                        command = queue.get()
+                        command.execute(self)
+                    elif command.isAbortable(): 
+                        command.stop()
+            
+    

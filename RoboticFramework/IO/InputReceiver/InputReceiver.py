@@ -3,7 +3,6 @@
 
 import sys
 import threading
-import time
 
 class InputReceiver(threading.Thread):
     def __init__(self, threadID, name, _queue):
@@ -15,6 +14,7 @@ class InputReceiver(threading.Thread):
         self.customName = name
         self.isStarted = 0
         self.queue = _queue
+        self.daemon = True
         
 		
     def run(self):

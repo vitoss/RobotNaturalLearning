@@ -1,10 +1,14 @@
 #Command base class
 #Author: Witold Wasilewski
 
-class Command:
+import threading
+from Command import Command
+
+class ConcurentCommand(Command, threading.Thread):
     
     def __init__(self):
-        pass
+        threading.Thread.__init__(self)
+        self.isSequential = True
         
     def execute(self, robotController):
         pass
@@ -19,5 +23,5 @@ class Command:
         return True
         
     def isAbortable(self):
-        return False
+        return not self.isSequential
         

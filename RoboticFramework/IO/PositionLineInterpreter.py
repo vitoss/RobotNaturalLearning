@@ -15,17 +15,20 @@ class PositionLineInterpreter (LineInterpreter.LineInterpreter):
     
     def interpret( self, sequence, line ):
         #all the magic here
-        sequence.appendPosition(self.interpretLine(line))
+        newPosition = self.interpretLine(line)
+        if( newPosition != -1 ):
+            sequence.appendPosition(newPosition)
         
     
     def interpretLine( self, line ):
         line = line.strip()
     
         #if comments -> continue
-        if line[0] == '#':
+        if len(line) == 0 or line[0] == '#':
             return -1
             
         newPosition = -1
+        
         splitedLine = line.split('(')
         functionName = splitedLine[0]
         
@@ -33,38 +36,25 @@ class PositionLineInterpreter (LineInterpreter.LineInterpreter):
         if len(splitedLine) > 1:
             inputsString = splitedLine[1].replace(")","")
         
-        
-        newPositionCommand = MoveToPositionCommand.MoveToPositionCommand()
-        
         if functionName == "move":
             #simple for now, list of joints
-            joints = map(float,inputsString.replace(" ","").split(","))
+            joints = self.getJoints(inputsString)
             newPosition = JointPosition(joints[0:self.axisAmount])
-            
-            if len(joints) == 7:
-                newPositionCommand.speedFactor = joints[6]
-                
+
         elif functionName == "moveCartesian":
-            joints = map(float,inputsString.replace(" ","").split(","))
+            joints = self.getJoints(inputsString)
             newPosition = CartesianPosition(joints[0:self.axisAmount])
-            
-            if len(joints) == 7:
-                newPositionCommand.speedFactor = joints[6]
-                
+
         elif functionName == "moveBy":
-            joints = map(float,inputsString.replace(" ","").split(","))
+            joints = self.getJoints(inputsString)
             newPosition = DeltaJointPosition(joints[0:self.axisAmount])
-            
-            if len(joints) == 7:
-                newPositionCommand.speedFactor = joints[6]
-                
+
         elif functionName == "moveCartesianBy":
-            joints = map(float,inputsString.replace(" ","").split(","))
+            joints = self.getJoints(inputsString)
             newPosition = DeltaCartesianPosition(joints[0:self.axisAmount])
-            
-            if len(joints) == 7:
-                newPositionCommand.speedFactor = joints[6]
         
-        newPositionCommand.position = newPosition
+        return newPosition
         
-        return newPositionCommand
+        
+    def getJoints( self, inputsString ):
+        return map(float,inputsString.replace(" ","").split(","))

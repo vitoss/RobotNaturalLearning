@@ -3,7 +3,7 @@
 
 import RoboticFramework.Command.CommandList as CommandList
 import RoboticFramework.Command.CommandLoop as CommandLoop
-import PositionLineInterpreter
+import PositionCommandLineInterpreter
 import RoboticFramework.Command.MoveToPositionCommand as MoveToPositionCommand
 
 class CommandLineInterpreter:
@@ -13,13 +13,13 @@ class CommandLineInterpreter:
         self.stack = []
         self.stack.append(rootCommandList)
         self.currentList = rootCommandList
-        self.lineInterpreter = PositionLineInterpreter.PositionLineInterpreter()
+        self.lineInterpreter = PositionCommandLineInterpreter.PositionCommandLineInterpreter()
     
     def __init__(self, rootCommandList):
         self.stack = []
         self.stack.append(rootCommandList)
         self.currentList = rootCommandList
-        self.lineInterpreter = PositionLineInterpreter.PositionLineInterpreter()
+        self.lineInterpreter = PositionCommandLineInterpreter.PositionCommandLineInterpreter()
         
     def interpret( self, line ):
         #all the magic here

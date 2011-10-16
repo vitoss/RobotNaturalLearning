@@ -2,7 +2,6 @@
 #Author: Witold Wasilewski 2011
 
 import time
-import msvcrt 
 from InputReceiver import InputReceiver 
 import RoboticFramework.Position.DeltaJointPosition as DeltaJointPosition
 
@@ -14,7 +13,6 @@ class KeyboardReceiver  : #(InputReceiver):
         self.isStarted = 1
     
     def start(self):
-
         self.run()
 
     def run(self):
@@ -22,7 +20,7 @@ class KeyboardReceiver  : #(InputReceiver):
         print "Starting " + self.customName
         while True: 
             time.sleep(0.05)
-            keyPressed = self.kbfunc()
+            keyPressed = self.getPressedKey()
             print keyPressed
             
             if keyPressed == 113:
@@ -39,10 +37,26 @@ class KeyboardReceiver  : #(InputReceiver):
 		
         print "Exiting " + self.customName
         
-    def kbfunc(self): 
-        x = msvcrt.kbhit()
-        if x: 
-            ret = ord(msvcrt.getch()) 
-        else: 
-            ret = 0 
-        return ret
+    #Returns key or 0 if not key is pressed
+    def getPressedKey(self): 
+        
+        try:
+            #LINUX implementation
+            import select
+        
+            i,o,e = select.select([sys.stdin],[],[],0.0001)
+            for s in i:
+                if s == sys.stdin:
+                    input = sys.stdin.readline()
+                    return input
+            return 0
+        except Exception as ex:
+            #WINDOWS implementation
+            import msvcrt
+            
+            x = msvcrt.kbhit()
+            if x: 
+                ret = ord(msvcrt.getch()) 
+            else: 
+                ret = 0 
+            return ret

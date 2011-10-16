@@ -1,13 +1,13 @@
 #Test for line interpreter
 #Author: Witold Wasilewski 2011
 
-from RoboticFramework.IO.LineInterpreter import LineInterpreter
+from RoboticFramework.IO.PositionLineInterpreter import PositionLineInterpreter
 from RoboticFramework.Position.PositionSequence import PositionSequence
 
 class TestLineIntepreter:
 	
 	def setup_method(self, method):
-		self.interpreter = LineInterpreter()
+		self.interpreter = PositionLineInterpreter()
 		self.sequence = PositionSequence([])
 		
 	def test_simpleJoint(self):

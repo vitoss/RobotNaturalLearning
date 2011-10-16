@@ -2,7 +2,7 @@
 #Author: Witold Wasilewski 2011
 
 import os.path
-from LineInterpreter import LineInterpreter
+from PositionLineInterpreter import PositionLineInterpreter
 
 class SequenceFileManager:
 	
@@ -10,7 +10,7 @@ class SequenceFileManager:
 		if os.path.exists(filename):
 			#reading from file
 			file = open(filename, "r")
-			interpreter = LineInterpreter()
+			interpreter = PositionLineInterpreter()
 			
 			for line in file:
 				if len(line) > 0:

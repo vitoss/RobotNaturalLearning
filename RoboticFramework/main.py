@@ -74,6 +74,7 @@ inputReceiversManager = InputReceiverManager()
 inputReceiversFactory = InputReceiverFactory(queue)
 
 inputReceiversManager.add(inputReceiversFactory.createSocket())
+inputReceiversManager.add(inputReceiversFactory.createJoystick())
 inputReceiversManager.start()
 
 robotController.startProcessingInputQueue(queue)

@@ -1,11 +1,10 @@
 #Class responsible for receiving socket based commands
 #Author: Witold Wasilewski 2011
 
-import time
 import SocketServer
 from InputReceiver import InputReceiver 
 import RoboticFramework.Position.DeltaJointPosition as DeltaJointPosition
-import RoboticFramework.IO.PositionLineInterpreter as PositionLineInterpreter
+import RoboticFramework.IO.PositionCommandLineInterpreter as PositionCommandLineInterpreter
 
 class SocketReceiver (InputReceiver):
     
@@ -31,7 +30,7 @@ class SocketReceiver (InputReceiver):
 class SocketReceiverHandler(SocketServer.BaseRequestHandler):
     
     def setup(self):
-        self.interpreter = PositionLineInterpreter.PositionLineInterpreter()
+        self.interpreter = PositionCommandLineInterpreter.PositionCommandLineInterpreter()
         SocketServer.BaseRequestHandler.setup(self)
     
     def finish(self):
@@ -48,7 +47,7 @@ class SocketReceiverHandler(SocketServer.BaseRequestHandler):
         socket = self.request[1]
         print "%s wrote:" % self.client_address[0]
         print data
-        socket.sendto(data.upper(), self.client_address)
+        socket.sendto(".", self.client_address)
         
         command = self.interpret_absolute(data)
         self.queue.put( command )
