@@ -18,3 +18,10 @@ Usuage:
 - edit - edit script
 - komentarze: /* */ lub #
 - q = quit = exit
+
+
+Links:
+- http://packages.python.org/cmd2/pycon2010/pycon2010.html
+- http://www.doughellmann.com/PyMOTW/cmd/
+- http://docs.python.org/release/3.1.3/library/cmd.html
+- http://packages.python.org/cmd2/

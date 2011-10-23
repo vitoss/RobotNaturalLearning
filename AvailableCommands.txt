@@ -1,0 +1,39 @@
+move(j1,j2,j3,j4,j5,j6 [,speedFactor])	
+number: 1
+format: !cffffff 
+number: 2
+format: !cfffffff 
+
+moveBy(j1,j2,j3,j4,j5,j6 [,speedFactor])
+number: 3
+format: !cffffff 
+number: 4
+format: !cfffffff
+
+moveAxis(j,value [,speedFactor])
+number: 5
+format: !cff
+number: 6
+format: !cfff
+
+moveAxisBy(j,value [,speedFactor])
+number: 7
+format: !cff
+number: 8
+format: !cfff
+
+beginRecordSession()
+number: 20
+format: !c
+
+endRecordSession()
+number: 21
+format: !c
+
+StartRecording()
+number: 22
+format: !c
+
+StopRecording()
+number: 23
+format: !c

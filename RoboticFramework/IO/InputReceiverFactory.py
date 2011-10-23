@@ -16,14 +16,15 @@ class InputReceiverFactory:
     
     def createKeyboard(self):
         print "Creating keyboard"
-        newReceiver = KeyboardReceiver.KeyboardReceiver( "Keyboard", self.queue)
+        newReceiver = KeyboardReceiver.KeyboardReceiver( 1, "Keyboard", self.queue)
+        newReceiver.config = self.config.Keyboard
         newReceiver.start()
         return newReceiver
         
     def createSocket(self):
         print "Creating socket"
         newReceiver = SocketReceiver.SocketReceiver( 2, "Socket", self.queue )
-        newReceiver.config = self.config.Sockets.Joystick #iPhone
+        newReceiver.config = self.config.Sockets.Simple #iPhone
         newReceiver.start()
         return newReceiver
     

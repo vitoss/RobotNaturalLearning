@@ -4,7 +4,7 @@
 from RoboticFramework.IO.PositionLineInterpreter import PositionLineInterpreter
 from RoboticFramework.Position.PositionSequence import PositionSequence
 
-class TestLineIntepreter:
+class TestPositionLineIntepreter:
 	
 	def setup_method(self, method):
 		self.interpreter = PositionLineInterpreter()

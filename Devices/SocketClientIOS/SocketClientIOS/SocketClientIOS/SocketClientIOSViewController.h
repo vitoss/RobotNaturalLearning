@@ -18,11 +18,10 @@
     IBOutlet UITextView *logWindow;
     IBOutlet UITextField *ipField;
     IBOutlet UITextField *portField;
-    IBOutlet UITextField *messageField;
     
     IBOutlet UIButton *connectButton;
-    IBOutlet UIButton *sendMsgButton;
-    IBOutlet UIButton *acceptButton;
+    IBOutlet UIButton *startSessionButotn;
+    IBOutlet UIButton *recButton;
     
     BOOL isRunning;
     BOOL isPortBinded;
@@ -41,8 +40,9 @@
 @property (nonatomic,retain) IBOutlet UITextField *messageField;
 @property (nonatomic,retain) IBOutlet UITextField *portField;
 @property (nonatomic,retain) IBOutlet UIButton *connectButton;
-@property (nonatomic,retain) IBOutlet UIButton *acceptButton;
-@property (nonatomic,retain) IBOutlet UIButton *sendMsgButton;
+@property (nonatomic,retain) IBOutlet UIButton *recButton;
+@property (nonatomic,retain) IBOutlet UIButton *startSessionButton;
+@property (nonatomic, retain) IBOutlet UILabel *queueCount;
 @property (nonatomic, retain) AsyncUdpSocket *listenSocket;
 @property (nonatomic, retain) NSMutableArray *connectedSockets;
 

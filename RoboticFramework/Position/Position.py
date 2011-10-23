@@ -6,7 +6,7 @@ class Position:
 	type = "Abstract"
 	
 	def __init__(self, value):
-		self._value = value
+		self._value = list(value)
 	
 	def getValue(self):
 		return self._value

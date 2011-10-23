@@ -13,6 +13,9 @@ class InputReceiverManager:
     def remove(self, receiver):
         self.inputReceivers.remove( receiver)
         
+    def has(self, receiver):
+        return receiver in self.inputReceivers
+        
     def start(self):
         for receiver in self.inputReceivers:
             if receiver.isStarted == 0:

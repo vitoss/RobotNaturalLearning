@@ -14,7 +14,7 @@ class TestSequenceExecutor:
 		
 		#building sequence
 		for i in range(1,7):
-			self.positions.append(Position(i))
+			self.positions.append(Position([i]))
 		self.sequence = PositionSequence(self.positions)
 		
 		#setting up robotController

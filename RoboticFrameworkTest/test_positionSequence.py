@@ -11,16 +11,17 @@ class TestPositionSequence:
 	def setup_method(self, method):
 		self.positions = []
 		for i in range(1,7):
-			self.positions.append(Position(i))
+			self.positions.append(Position([i]))
+			
 		self.positionSequence = PositionSequence(self.positions)
 	
 	def test_append_count(self):
-		newPosition = Position(7)
+		newPosition = Position([7])
 		self.positionSequence.appendPosition(newPosition)
 		assert self.positionSequence.amount() == len(self.positions)+1
 		
 	def test_append_element_at_end(self):
-		newPosition = Position(8)
+		newPosition = Position([8])
 		self.positionSequence.appendPosition(newPosition)
 		retrivedPosition = self.positionSequence.getPosition(6)
 		

@@ -14,6 +14,9 @@ def start():
     # Create a socket (UDP)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+    sock.setblocking(0)
+    sock.settimeout(5)
+    
     # Connect to server and send data
     sock.connect((HOST, PORT))
 
@@ -41,7 +44,7 @@ def start():
             if isDataSetEmpty: 
                 continue
             
-            axisScales = [10,10,10] #TODO from config?
+            axisScales = [8,8,8] #TODO from config?
             maxAxisValue = max(abs(value["axis1"]), abs(value["axis2"]), abs(value["axis3"]))
             speedFactor = maxAxisValue #self.config.speedFactor
             
@@ -60,7 +63,8 @@ def start():
                 
             time.sleep(0.1)
 
-    except:
+    except Exception as ex:
+        print ex
         print "closing"
     
     sock.close()

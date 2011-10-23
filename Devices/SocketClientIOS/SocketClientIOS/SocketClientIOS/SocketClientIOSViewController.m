@@ -15,12 +15,13 @@
 #define WELCOME_MSG  0
 #define ECHO_MSG     1
 
-#define MESSAGE_INTERVAL 0.5
+#define MESSAGE_INTERVAL 1.0
 #define MAX_ARM_SPEED 10
+#define MAX_QUEUE_AMOUNT 10
 
 @implementation SocketClientIOSViewController
 @synthesize logWindow, ipField, messageField, portField, listenSocket, connectedSockets;
-@synthesize sendMsgButton, connectButton, accelerometer, acceptButton;
+@synthesize recButton, connectButton, accelerometer, startSessionButton, queueCount;
 
 
 - (void)dealloc
@@ -54,7 +55,8 @@
     ipField.delegate = self;
     
     messageField.enabled = false;
-    sendMsgButton.enabled = false;
+    startSessionButton.enabled = false;
+    recButton.enabled = false;
     
     [listenSocket setRunLoopModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
     
@@ -101,7 +103,7 @@
         } else {
             //enabling UI
             messageField.enabled = true;
-            sendMsgButton.enabled = true;
+            startSessionButton.enabled = true;
             
             //chaning connect to disconect
             [connectButton setTitle:@"Disconnect" forState:UIControlStateNormal];
@@ -120,7 +122,7 @@
         
         //enabling UI
         ipField.enabled = NO;
-        sendMsgButton.enabled = NO;
+        startSessionButton.enabled = NO;
         messageField.enabled = NO;
         
         [connectButton setTitle:@"Connect" forState:UIControlStateNormal];
@@ -145,7 +147,7 @@
             [self logMessage:@"Port binded"];
             
             //chaning connect to disconect
-            [acceptButton setTitle:@"Disconnect" forState:UIControlStateNormal];
+            //[acceptButton setTitle:@"Disconnect" forState:UIControlStateNormal];
             
             isPortBinded = YES;
             portField.enabled = false;
@@ -155,7 +157,7 @@
     } else {
         [listenSocket close];
         
-        [acceptButton setTitle:@"Connect" forState:UIControlStateNormal];
+        //[acceptButton setTitle:@"Connect" forState:UIControlStateNormal];
         
         isPortBinded = NO;
     }
@@ -164,7 +166,6 @@
 -(IBAction) sendMessage: (id) sender {
     [self logMessage:@"Start sending message to server"];
     NSMutableString *message = [NSMutableString stringWithString:[messageField text]];
-    //[message appendString:@"\r\n"];
     [message appendString:@"\n"];
     NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -172,6 +173,7 @@
     {
         //sending only to connected hosts
         [[connectedSockets objectAtIndex:i] sendData:messageData withTimeout:-1 tag:ECHO_MSG];
+        [[connectedSockets objectAtIndex:i] receiveWithTimeout:1.0 tag:ECHO_MSG];
     }
 
 }
@@ -180,7 +182,7 @@
 
 
 - (void)onUdpSocket:(AsyncUdpSocket *)sock didSendDataWithTag:(long)tag {
-    [self logMessage:@"Message sent"];
+    //[self logMessage:@"Message sent"];
 }
 
 - (void)onUdpSocket:(AsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error {
@@ -189,7 +191,7 @@
 
 - (BOOL)onUdpSocket:(AsyncUdpSocket *)sock didReceiveData:(NSData *)data withTag:(long)tag fromHost:(NSString *)host port:(UInt16)port {
     
-    NSData *strData = [data subdataWithRange:NSMakeRange(0, [data length] - 2)];
+    NSData *strData = [data subdataWithRange:NSMakeRange(0, [data length] - 1)];
 	NSString *msg = [[[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding] autorelease];
 	if(msg)
 	{
@@ -199,9 +201,13 @@
 	{
 		[self logMessage:@"Error converting received data into UTF-8 String"];
 	}
-
-    [self logMessage:@"didReceiveData from host on port"];
-    [listenSocket receiveWithTimeout:-1 tag:ECHO_MSG];
+    
+    //data was received
+    //in response we've got queue count
+    [queueCount setText:msg];
+    
+    
+    //[listenSocket receiveWithTimeout:-1 tag:ECHO_MSG];
     return YES;
 }
 
@@ -215,7 +221,8 @@
     [connectedSockets removeObject:sock];
     
     messageField.enabled = false;
-    sendMsgButton.enabled = false;
+    startSessionButton.enabled = false;
+    recButton.enabled = false;
     
     //chaning connect to disconect
     [connectButton setTitle:@"Connect" forState:UIControlStateNormal];
@@ -234,68 +241,33 @@
     if( isRunning ) {
         //[self logMessage:@"Send acceleration data."];
         
-        float xSpeedFactor = acceleration.x;
-        if( xSpeedFactor < 0 )
-            xSpeedFactor = -xSpeedFactor;
+        float xAxis = acceleration.x;
+        float yAxis = acceleration.y;
+        float zAxis = acceleration.z;
         
-        if( xSpeedFactor > 0.66 )
-            xSpeedFactor = 1;
-        else if( xSpeedFactor > 0.33 )
-            xSpeedFactor = 0.5;
-        else 
-            xSpeedFactor = 0;
+        float axisRange = 60;
         
-        float ySpeedFactor = acceleration.y;
+        if( xAxis < 0 )
+            xAxis = 0;
+        else
+            xAxis = xAxis*axisRange;
+
+        if( yAxis < 0 )
+            yAxis = 0;
+        else
+            yAxis = yAxis*axisRange;
         
-        if( ySpeedFactor < 0 )
-            ySpeedFactor = -ySpeedFactor;
+        if( zAxis < 0 )
+            zAxis = 0;
+        else
+            zAxis = zAxis*axisRange;
         
-        if( ySpeedFactor > 0.66  )
-            ySpeedFactor = 1;
-        else if( ySpeedFactor > 0.33  )
-            ySpeedFactor = 0.5;
-        else 
-            ySpeedFactor = 0;
+        float finalSpeedFactor = 1.0;// MAX(zAxis, MAX(xAxis, yAxis))/60.0;
         
-        
-        float zSpeedFactor = acceleration.z;
-        
-        if( zSpeedFactor < 0 )
-            zSpeedFactor = -zSpeedFactor;
-        
-        if( zSpeedFactor > 0.66 )
-            zSpeedFactor = 1;
-        else if( zSpeedFactor > 0.33 )
-            zSpeedFactor = 0.5;
-        else 
-            zSpeedFactor = 0;
-        
-        //first axis
-        float xAxis = MAX_ARM_SPEED*xSpeedFactor*MESSAGE_INTERVAL;
-        float yAxis = MAX_ARM_SPEED*ySpeedFactor*MESSAGE_INTERVAL;
-        float zAxis = MAX_ARM_SPEED*zSpeedFactor*MESSAGE_INTERVAL;
-        
-        if( acceleration.x > 0.5 ) {
-            xAxis = xAxis; 
-        } else if( acceleration.x < -0.5 ) {
-            xAxis = -xAxis;
-        }
-        
-        if( acceleration.y > 0.5 ) {
-            yAxis = yAxis; 
-        } else if( acceleration.y < -0.5 ) {
-            yAxis = -yAxis;
-        }
-        
-        if( acceleration.z > 0.5 ) {
-            zAxis = zAxis; 
-        } else if( acceleration.z < -0.5 ) {
-            zAxis = -zAxis;
-        }
-        
-        float finalSpeedFactor = MAX( zSpeedFactor, MAX(xSpeedFactor, ySpeedFactor));
-        
-        NSMutableString *message = [NSMutableString stringWithString: [NSString stringWithFormat:@"moveBy(%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f)", xAxis, yAxis, zAxis, 0.0, 0.0, 0.0, finalSpeedFactor]];
+        if( xAxis == 0 && yAxis == 0 && zAxis == 0 )
+            return;
+                
+        NSMutableString *message = [NSMutableString stringWithString: [NSString stringWithFormat:@"move(%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f)", xAxis, yAxis, zAxis, 0.0, 0.0, 0.0, finalSpeedFactor]];
         [message appendString:@"\n"];
         
         //for test        
@@ -308,11 +280,10 @@
         
         for(int i = 0; i < [connectedSockets count]; i++)
 		{
-			// Call disconnect on the socket,
-			// which will invoke the onSocketDidDisconnect: method,
-			// which will remove the socket from the list.
-			//[[connectedSockets objectAtIndex:i] writeData:messageData withTimeout:-1 tag:ECHO_MSG];//TCPIP
-            [[connectedSockets objectAtIndex:i] sendData:messageData withTimeout:-1 tag:ECHO_MSG]; //UDP
+			//[[connectedSockets objectAtIndex:i] writeData:messageData withTimeout:MESSAGE_INTERVAL tag:ECHO_MSG];//TCPIP
+            [[connectedSockets objectAtIndex:i] sendData:messageData withTimeout:MESSAGE_INTERVAL tag:ECHO_MSG]; //UDP
+            
+            [[connectedSockets objectAtIndex:i] receiveWithTimeout:MESSAGE_INTERVAL tag:ECHO_MSG]; 
 		}
     }
 }

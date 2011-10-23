@@ -1,0 +1,6 @@
+Adapter: FT232RL -> stery w katalogu. Trzeba je doinstalować na UNIX, Win sam wykrywa.
+http://www.ftdichip.com/Drivers/VCP.htm
+
+Do analizy serial portu: Cool Term
+
+Do obsługi w pythone wykorzystujemy py-serial 2.5.

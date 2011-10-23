@@ -8,7 +8,7 @@ class TestKeyboardReceiver:
     
     def setup_method(self, method):
         queue = Queue.Queue(maxsize=0)
-        self.keyboardReceiver = KeyboardReceiverMock("KeyboardReceiverMock", queue)
+        self.keyboardReceiver = KeyboardReceiverMock(1, "KeyboardReceiverMock", queue)
     
     def testTestLeftArrow(self):
         pass

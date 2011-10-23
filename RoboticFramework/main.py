@@ -7,6 +7,8 @@ from Blender import Mathutils as Math
 from Blender.Mathutils import Matrix
 from math import *
 
+from config import Config
+
 #modules
 import RoboticFramework
 from RoboticFramework import RobotArm
@@ -23,16 +25,16 @@ reload(CommandFileManager)
 
 #Input receivers libraries
 import Queue
-import pygame
 
 from RoboticFramework.IO.InputReceiverManager import InputReceiverManager
 reload (RoboticFramework.IO.InputReceiverManager )
 from RoboticFramework.IO.InputReceiverFactory import InputReceiverFactory
 reload (RoboticFramework.IO.InputReceiverFactory )
 
-pygame.init()
-
 #
+#configFile = file("D:/My Dropbox/Projects/bch/RobotLearning/settings.cfg")
+configFile = "settings.cfg"
+config = Config( configFile )
 
 links = []
 links.append( Object.Get('linkone') ) 
@@ -46,11 +48,12 @@ tool= Object.Get('tool')
 toolPiston= Object.Get('toolpiston')
 
 #init Robot Arm abstract model
-initPositions = [0,0,0,0,0,0]
-constrainments = [[0,100],[0,100],[0,100],[0,100],[0,100],[0,100]]
-maxSpeed = [10,10,10,10,10,10]
+initPositions = config.initPositions
+constrainments = config.constrainments
+maxSpeed = config.maxSpeed
+accuracy = config.accuracy
 
-robotArm = RobotArm.RobotArm( initPositions, constrainments, maxSpeed )
+robotArm = RobotArm.RobotArm( initPositions, constrainments, maxSpeed, accuracy )
 
 #init model bounder
 robotModelBounder = RobotModelBounder.RobotModelBounder( robotArm, links, tool, toolPiston )
@@ -61,20 +64,19 @@ robotController = RobotController.RobotController(robotArm, robotModelBounder, R
 
 #reading from file
 manager = CommandFileManager.CommandFileManager()
-#manager.load(sequence, "/Users/vito/Dropbox/Projects/bch/fanuc-LR-Mate200i-simulation/angles.txt")
-commands = manager.load("D:/My Dropbox/Projects/bch/RobotLearning/commands.txt")
+commands = manager.load(config.commandsFilename)
 
 commands.execute(robotController)
 
 #Input Receivers
 #create queue for input events. Maxsize set to 0 means unlimited number of events
-queue = Queue.Queue(maxsize=0)
+queue = Queue.Queue(maxsize=config.queueMaxSize)
 
 inputReceiversManager = InputReceiverManager()
-inputReceiversFactory = InputReceiverFactory(queue)
+inputReceiversFactory = InputReceiverFactory(queue, config)
 
 inputReceiversManager.add(inputReceiversFactory.createSocket())
-inputReceiversManager.add(inputReceiversFactory.createJoystick())
+#inputReceiversManager.add(inputReceiversFactory.createJoystick())
 inputReceiversManager.start()
 
 robotController.startProcessingInputQueue(queue)

@@ -5,15 +5,7 @@ import time
 from InputReceiver import InputReceiver 
 import RoboticFramework.Position.DeltaJointPosition as DeltaJointPosition
 
-class KeyboardReceiver  : #(InputReceiver):
-	
-    def __init__(self, name, _queue):
-        self.customName = name
-        self.queue = _queue
-        self.isStarted = 1
-    
-    def start(self):
-        self.run()
+class KeyboardReceiver(InputReceiver):
 
     def run(self):
         
@@ -51,6 +43,9 @@ class KeyboardReceiver  : #(InputReceiver):
                     return input
             return 0
         except Exception:
+            pass
+            
+        try:
             #WINDOWS implementation
             import msvcrt
             
@@ -60,3 +55,5 @@ class KeyboardReceiver  : #(InputReceiver):
             else: 
                 ret = 0 
             return ret
+        except Exception:
+            pass
